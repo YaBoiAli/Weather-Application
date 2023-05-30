@@ -1,4 +1,3 @@
-// Replace 'YOUR_API_KEY' with your actual API key
 const apiKey = '21a46f90b8a043e6c1fed3e11137f2ff';
 const searchInput = document.querySelector('.search-bar');
 const searchButton = document.querySelector('button');
@@ -16,10 +15,12 @@ searchButton.addEventListener('click', () => {
         const forecastList = data.list;
         const cards = document.querySelectorAll('.card');
 
+        // Get unique dates from the forecast data
+        const uniqueDates = [...new Set(forecastList.map(forecast => forecast.dt_txt.split(' ')[0]))];
+
         // Iterate over the forecast data and populate each card
-        for (let i = 0; i < cards.length; i++) {
+        uniqueDates.forEach((date, i) => {
           const card = cards[i];
-          const forecast = forecastList[i * 8]; // Retrieve forecast for every 24 hours (8 data points per day)
 
           const dateElement = card.querySelector('.date');
           const tempElement = card.querySelector('.temp');
@@ -29,19 +30,21 @@ searchButton.addEventListener('click', () => {
           const windElement = card.querySelector('.wind');
 
           // Format the date
-          const date = new Date(forecast.dt * 1000); // Multiply by 1000 to convert from seconds to milliseconds
-          const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+          const formattedDate = new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+          // Filter forecast data for the current date
+          const filteredForecast = forecastList.filter(forecast => forecast.dt_txt.split(' ')[0] === date);
 
           // Extract and convert temperature from Kelvin to Celsius
-          const temp = Math.round(forecast.main.temp - 273.15);
+          const temp = Math.round(filteredForecast[0].main.temp - 273.15);
 
           // Get the weather icon URL
-          const iconUrl = `https://openweathermap.org/img/wn/${forecast.weather[0].icon}.png`;
+          const iconUrl = `https://openweathermap.org/img/wn/${filteredForecast[0].weather[0].icon}.png`;
 
           // Extract other forecast details
-          const description = forecast.weather[0].description;
-          const humidity = forecast.main.humidity;
-          const windSpeed = forecast.wind.speed;
+          const description = filteredForecast[0].weather[0].description;
+          const humidity = filteredForecast[0].main.humidity;
+          const windSpeed = filteredForecast[0].wind.speed;
 
           // Update the card with the forecast data
           dateElement.textContent = formattedDate;
@@ -53,7 +56,7 @@ searchButton.addEventListener('click', () => {
 
           // Remove the 'loading' class to display the forecast
           card.querySelector('.weather').classList.remove('loading');
-        }
+        });
       })
       .catch(error => {
         console.log('An error occurred while fetching the weather data:', error);
