@@ -1,3 +1,5 @@
+
+
 body {
     display: flex;
     margin: 0;
@@ -8,6 +10,7 @@ body {
     background-color: #000120;
     width: 100%;
     position: absolute;
+    z-index: 1; 
   }
   
   div.title {
@@ -66,9 +69,9 @@ body {
     align-items: flex-end;
     flex-wrap: wrap;
     max-width: 1000px;
-    margin: 20px auto; /* Add some margin to create space */
+    margin: 20px;
     position: absolute;
-    bottom: 20px;
+    bottom: 0;
     left: 30%;
     right: 0;
   }
@@ -86,3 +89,17 @@ body {
     margin-top: 10px;
     
   }
+
+  .weather.loading{
+    visibility: hidden;
+    max-height: 20px;
+    position: relative;
+}
+
+.weather.loading:after{
+    visibility: visible;
+    content: "Loading...";
+    color: white;
+    position: absolute;
+    top: 0;
+}
