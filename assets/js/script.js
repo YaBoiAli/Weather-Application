@@ -3,9 +3,49 @@ const searchInput = document.querySelector('.search-bar');
 const searchButton = document.querySelector('button');
 const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q={CITY_NAME}&appid=${apiKey}`;
 
+
+const clearElement = document.querySelector('.clear');
+
+
+clearElement.addEventListener("click", () => {
+  localStorage.removeItem('previousSearches');
+  location.reload();
+});
+
+// Retrieve previous searches from local storage
+const previousSearches = JSON.parse(localStorage.getItem('previousSearches')) || [];
+const resultsDiv = document.querySelector('.results');
+
+// Function to save previous searches to local storage
+const savePreviousSearches = () => {
+  localStorage.setItem('previousSearches', JSON.stringify(previousSearches));
+};
+
+// Print the previous searches in the results div
+previousSearches.forEach(search => {
+  const searchItem = document.createElement('p');
+  searchItem.textContent = search;
+  resultsDiv.appendChild(searchItem);
+});
+
 searchButton.addEventListener('click', () => {
   const cityName = searchInput.value;
+
   if (cityName) {
+    previousSearches.unshift(cityName); // Add the searched city to the beginning of the array
+
+    // Clear the results div
+    resultsDiv.innerHTML = '';
+
+    // Print the previous searches in the results div
+    previousSearches.forEach(search => {
+      const searchItem = document.createElement('p');
+      searchItem.textContent = search;
+      resultsDiv.appendChild(searchItem);
+    });
+
+    savePreviousSearches();
+
     const forecastUrl = apiUrl.replace('{CITY_NAME}', cityName);
 
     // Fetch the weather forecast data for the searched city
@@ -66,6 +106,8 @@ searchButton.addEventListener('click', () => {
       })
       .catch(error => {
         console.log('An error occurred while fetching the weather data:', error);
+        alert("City not found. Please enter a valid city name.");
+        previousSearches[0].removeItem();
       });
   }
 });

@@ -34,7 +34,7 @@ body {
     z-index: 1; 
   }
   
-  button {
+  .button {
     margin: 0.5em;
     border-radius: 50%;
     border: none;
@@ -98,8 +98,18 @@ body {
 
 .weather.loading:after{
     visibility: visible;
-    content: "Loading...";
+    content: "Please Search a Valid city Name...";
     color: white;
     position: absolute;
     top: 0;
+}
+.clear{
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  background: #7c7c7c2b;
+  color: black;
+  transition: 0.2s ease-in-out;
+  font-size: 15px;
+  padding: 5px 20px 5px 20px;
 }
