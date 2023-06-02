@@ -2,6 +2,7 @@
 
 body {
     display: flex;
+    flex-direction: column;
     margin: 0;
     height: 100%;
   }
@@ -70,10 +71,6 @@ body {
     flex-wrap: wrap;
     max-width: 1000px;
     margin: 20px;
-    position: absolute;
-    bottom: 0;
-    left: 30%;
-    right: 0;
   }
   
   .card {
@@ -104,12 +101,25 @@ body {
     top: 0;
 }
 .clear{
-  border-radius: 50%;
+  border-radius: 10px;
   border: none;
   outline: none;
   background: #7c7c7c2b;
   color: black;
   transition: 0.2s ease-in-out;
   font-size: 15px;
-  padding: 5px 20px 5px 20px;
+  padding: 10px;
+  margin-left: 6px;
+  font-weight: 700;
+}
+
+.preBtn{
+  margin: 0.5em;
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+  outline: none;
+  background: #7c7c7c2b;
+  color: black;
+  transition: 0.2s ease-in-out;
 }

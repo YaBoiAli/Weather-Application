@@ -23,7 +23,8 @@ const savePreviousSearches = () => {
 
 // Print the previous searches in the results div
 previousSearches.forEach(search => {
-  const searchItem = document.createElement('p');
+  const searchItem = document.createElement('button');
+  searchItem.classList.add('preBtn');
   searchItem.textContent = search;
   resultsDiv.appendChild(searchItem);
 });
@@ -39,7 +40,8 @@ searchButton.addEventListener('click', () => {
 
     // Print the previous searches in the results div
     previousSearches.forEach(search => {
-      const searchItem = document.createElement('p');
+      const searchItem = document.createElement('button');
+      searchItem.classList.add('preBtn');
       searchItem.textContent = search;
       resultsDiv.appendChild(searchItem);
     });
