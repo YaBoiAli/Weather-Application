@@ -14,7 +14,7 @@ clearElement.addEventListener("click", () => {
 
 // Retrieve previous searches from local storage
 const previousSearches = JSON.parse(localStorage.getItem('previousSearches')) || [];
-const resultsDiv = document.querySelector('.results');
+const previousDiv = document.querySelector('.prevbtn');
 
 // Function to save previous searches to local storage
 const savePreviousSearches = () => {
@@ -26,7 +26,7 @@ previousSearches.forEach(search => {
   const searchItem = document.createElement('button');
   searchItem.classList.add('preBtn');
   searchItem.textContent = search;
-  resultsDiv.appendChild(searchItem);
+  previousDiv.appendChild(searchItem);
 });
 
 searchButton.addEventListener('click', () => {
@@ -36,14 +36,14 @@ searchButton.addEventListener('click', () => {
     previousSearches.unshift(cityName); // Add the searched city to the beginning of the array
 
     // Clear the results div
-    resultsDiv.innerHTML = '';
+    previousDiv.innerHTML = '';
 
     // Print the previous searches in the results div
     previousSearches.forEach(search => {
       const searchItem = document.createElement('button');
       searchItem.classList.add('preBtn');
       searchItem.textContent = search;
-      resultsDiv.appendChild(searchItem);
+      previousDiv.appendChild(searchItem);
     });
 
     savePreviousSearches();
