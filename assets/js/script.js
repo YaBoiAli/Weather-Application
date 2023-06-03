@@ -1,61 +1,83 @@
-const apiKey = '21a46f90b8a043e6c1fed3e11137f2ff';
-const searchInput = document.querySelector('.search-bar');
-const searchButton = document.querySelector('button');
+const apiKey = "21a46f90b8a043e6c1fed3e11137f2ff";
+const searchInput = document.querySelector(".search-bar");
+const searchButton = document.querySelector("button");
 const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q={CITY_NAME}&appid=${apiKey}`;
 
-
-const clearElement = document.querySelector('.clear');
-
+const clearElement = document.querySelector(".clear");
 
 clearElement.addEventListener("click", () => {
-  localStorage.removeItem('previousSearches');
+  localStorage.removeItem("previousSearches");
   location.reload();
 });
 
 // Retrieve previous searches from local storage
-const previousSearches = JSON.parse(localStorage.getItem('previousSearches')) || [];
-const previousDiv = document.querySelector('.prevbtn');
+const previousSearches =
+  JSON.parse(localStorage.getItem("previousSearches")) || [];
+const previousDiv = document.querySelector(".prevbtn");
 
 // Function to save previous searches to local storage
 const savePreviousSearches = () => {
-  localStorage.setItem('previousSearches', JSON.stringify(previousSearches));
+  localStorage.setItem("previousSearches", JSON.stringify(previousSearches));
+};
+console.log(previousSearches);
+
+const searchArray = [];
+
+const variable = {};
+
+//function to call inside the main function for search
+const noRepeatSearch = () => {
+  for (var i = 0; i < previousSearches.length; i++) {
+    const searchedCity = previousSearches[i];
+    if (!variable[searchedCity]) {
+      variable[searchedCity] = true;
+      searchArray.push(searchedCity);
+    }
+  }
 };
 
+noRepeatSearch();
 // Print the previous searches in the results div
-previousSearches.forEach(search => {
-  const searchItem = document.createElement('button');
-  searchItem.classList.add('preBtn');
+searchArray.forEach((search) => {
+  const searchItem = document.createElement("button");
+  searchItem.classList.add("preBtn");
   searchItem.textContent = search;
   previousDiv.appendChild(searchItem);
 });
 
-searchButton.addEventListener('click', () => {
+const performPreviousSearch = (cityName) => {
+  searchInput.value = cityName;
+  searchButton.click();
+};
+
+
+//Search Button clicked
+searchButton.addEventListener("click", () => {
   const cityName = searchInput.value;
 
   if (cityName) {
     previousSearches.unshift(cityName); // Add the searched city to the beginning of the array
 
-    // Clear the results div
-    previousDiv.innerHTML = '';
+    previousDiv.innerHTML= '';
 
-    // Print the previous searches in the results div
-    previousSearches.forEach(search => {
-      const searchItem = document.createElement('button');
-      searchItem.classList.add('preBtn');
+    noRepeatSearch();
+    searchArray.forEach((search) => {
+      const searchItem = document.createElement("button");
+      searchItem.classList.add("preBtn");
       searchItem.textContent = search;
       previousDiv.appendChild(searchItem);
     });
-
+    //saving and diplaying the previous code
     savePreviousSearches();
 
-    const forecastUrl = apiUrl.replace('{CITY_NAME}', cityName);
+    const forecastUrl = apiUrl.replace("{CITY_NAME}", cityName);
 
     // Fetch the weather forecast data for the searched city
     fetch(forecastUrl)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         const forecastList = data.list;
-        const cards = document.querySelectorAll('.card');
+        const cards = document.querySelectorAll(".card");
 
         // Get today's date
         const today = new Date();
@@ -67,20 +89,20 @@ searchButton.addEventListener('click', () => {
 
           const card = cards[i];
 
-          const dateElement = card.querySelector('.date');
-          const tempElement = card.querySelector('.temp');
-          const iconElement = card.querySelector('.icon');
-          const descriptionElement = card.querySelector('.description');
-          const humidityElement = card.querySelector('.humidity');
-          const windElement = card.querySelector('.wind');
+          const dateElement = card.querySelector(".date");
+          const tempElement = card.querySelector(".temp");
+          const iconElement = card.querySelector(".icon");
+          const descriptionElement = card.querySelector(".description");
+          const humidityElement = card.querySelector(".humidity");
+          const windElement = card.querySelector(".wind");
 
           // Calculate the date for the current card
-          const date = new Date(today.getTime() + (i * 24 * 60 * 60 * 1000)); // Add i days to today's date
+          const date = new Date(today.getTime() + i * 24 * 60 * 60 * 1000); // Add i days to today's date
 
           // Format the date
-          const formattedDate = date.toLocaleDateString('en-US', {
-            month: 'short',
-            day: 'numeric',
+          const formattedDate = date.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
           });
 
           // Extract and convert temperature from Kelvin to Celsius
@@ -103,13 +125,15 @@ searchButton.addEventListener('click', () => {
           windElement.textContent = `Wind Speed: ${windSpeed}km/hr`;
 
           // Remove the 'loading' class to display the forecast
-          card.querySelector('.weather').classList.remove('loading');
+          card.querySelector(".weather").classList.remove("loading");
         }
       })
-      .catch(error => {
-        console.log('An error occurred while fetching the weather data:', error);
+      .catch((error) => {
+        console.log(
+          "An error occurred while fetching the weather data:",
+          error
+        );
         alert("City not found. Please enter a valid city name.");
-        previousSearches[0].removeItem();
       });
   }
 });
