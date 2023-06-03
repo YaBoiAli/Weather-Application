@@ -19,7 +19,6 @@ const previousDiv = document.querySelector(".prevbtn");
 const savePreviousSearches = () => {
   localStorage.setItem("previousSearches", JSON.stringify(previousSearches));
 };
-console.log(previousSearches);
 
 const searchArray = [];
 
@@ -36,20 +35,24 @@ const noRepeatSearch = () => {
   }
 };
 
+
+
+const performSearch = (cityName) => {
+  searchInput.value = cityName;
+  searchButton.click();
+};
+
 noRepeatSearch();
 // Print the previous searches in the results div
 searchArray.forEach((search) => {
   const searchItem = document.createElement("button");
   searchItem.classList.add("preBtn");
   searchItem.textContent = search;
+  searchItem.addEventListener("click", () => {
+    performSearch(search);
+  });
   previousDiv.appendChild(searchItem);
 });
-
-const performPreviousSearch = (cityName) => {
-  searchInput.value = cityName;
-  searchButton.click();
-};
-
 
 //Search Button clicked
 searchButton.addEventListener("click", () => {
@@ -58,13 +61,18 @@ searchButton.addEventListener("click", () => {
   if (cityName) {
     previousSearches.unshift(cityName); // Add the searched city to the beginning of the array
 
-    previousDiv.innerHTML= '';
+    previousDiv.innerHTML = "";
 
     noRepeatSearch();
+
+
     searchArray.forEach((search) => {
       const searchItem = document.createElement("button");
       searchItem.classList.add("preBtn");
       searchItem.textContent = search;
+      searchItem.addEventListener("click", () => {
+        performSearch(search);
+      });
       previousDiv.appendChild(searchItem);
     });
     //saving and diplaying the previous code

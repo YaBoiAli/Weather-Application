@@ -5,6 +5,7 @@ body {
     flex-direction: column;
     margin: 0;
     height: 100%;
+    background-image: url('https://source.unsplash.com/3840x2160/?landscape');
   }
   
   header {
@@ -45,10 +46,13 @@ body {
     background: #7c7c7c2b;
     color: black;
     transition: 0.2s ease-in-out;
+    background: white;
+    opacity: 80%;
   }
   
   button:hover {
-    background: #7c7c7c6b;
+    background: whitesmoke;
+    opacity: 60%;
   }
   
   input.search-bar {
@@ -62,6 +66,8 @@ body {
     max-width: 420px;
     font-size: 120%;
     width: 90%;
+    background: white;
+    opacity: 80%;
   }
   
   .card-container {
@@ -111,6 +117,8 @@ body {
   padding: 10px;
   margin-left: 6px;
   font-weight: 700;
+  background: white;
+  opacity: 80%;
 }
 
 .preBtn{
@@ -122,4 +130,11 @@ body {
   background: #7c7c7c2b;
   color: black;
   transition: 0.2s ease-in-out;
+  background: white;
+  opacity: 80%;
+}
+
+.saved-search{
+  color: white;
+  opacity: 90%;
 }

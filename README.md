@@ -24,7 +24,7 @@ This is a simple weather application built with JavaScript that retrieves and di
 
 ## Screenshots and Links
 
-![WeatherAPP SS](https://github.com/YaBoiAli/06-challenge/blob/main/assets/img/Screenshot%202023-05-30%20174305.png)
+![WeatherAPP SS](https://github.com/YaBoiAli/06-challenge/blob/main/assets/img/)
 
 Link to repo => [(https://github.com/YaBoiAli/06-challenge)]
 
