@@ -26,9 +26,9 @@ This is a simple weather application built with JavaScript that retrieves and di
 
 ![WeatherAPP SS](https://github.com/YaBoiAli/06-challenge/blob/main/assets/img/Screenshot%202023-06-03%20000933.png)
 
-Link to repo => [(https://github.com/YaBoiAli/06-challenge)]
+Link to repo => (https://github.com/YaBoiAli/Weather-Application)
 
-Link to deployed site => [(https://yaboiali.github.io/06-challenge/)]
+Link to deployed site => (https://yaboiali.github.io/Weather-Application/)
 
 ## Dependencies
 
